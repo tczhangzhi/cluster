@@ -1,0 +1,21 @@
+{% set version = "0.1.0" %}
+
+package:
+  name: torchcluster
+  version: {{ version }}
+
+build:
+  noarch: generic
+
+requirements:
+  run:
+    - python
+    - pytorch
+    - numpy
+
+about:
+  home: https://github.com/tczhangzhi/cluster
+  license: MIT
+  summary: 'Torchcluster is a python package for cluster analysis.'
+  description: |
+    Torchcluster is a python package for cluster analysis. The speed of the clustering algorithm has been effectively improved with the Pytorch backend. We are also working on test datasets and visualization tools. Related work is coming in the next release.

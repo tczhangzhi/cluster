@@ -1,0 +1,2 @@
+class Cluster(object):
+    pass
