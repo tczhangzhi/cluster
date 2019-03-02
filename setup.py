@@ -9,7 +9,7 @@ readme = open('README.rst').read()
 
 setup(
     name='torchcluster',
-    version='0.1.0',
+    version='0.1.1',
     description='Torchcluster is a python package for cluster analysis.',
     license='MIT',
     author='Zhi Zhang',

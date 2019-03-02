@@ -1,3 +1,4 @@
+import pdb
 import torch
 import numpy as np
 from .base import Cluster
@@ -20,17 +21,19 @@ class KMeans(Cluster):
 
         while True:
             pre_state = state.clone()
-            
             dis = setwise_distance(x, state).squeeze()
             result = torch.argmin(dis, dim=1)
             
             for i in range(self.n_clusters):
                 idx = torch.nonzero(result == i).squeeze()
                 items = torch.index_select(x, 0, idx)
-                state[i] = items.mean(dim=0)
+                if items.size(0):
+                    state[i] = items.mean(dim=0)
+                else:
+                    state[i] = pre_state[i].clone()
                 
             shift = torch.pairwise_distance(pre_state, state)
             total = torch.pow(torch.sum(shift), 2.0)
-
-            if total < self.tol or torch.isnan(total):
+            
+            if total < self.tol:
                 return result, state
