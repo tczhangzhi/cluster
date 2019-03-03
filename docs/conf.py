@@ -178,3 +178,29 @@ epub_exclude_files = ['search.html']
 
 # -- Extension configuration -------------------------------------------------
 autoclass_content = 'both'
+
+import sys
+from unittest.mock import MagicMock
+
+class Mock(MagicMock):
+    @classmethod
+    def __getattr__(cls, name):
+            return MagicMock()
+
+MOCK_MODULES = [
+    'numpy',
+    'scipy',
+    'sklearn',
+    'matplotlib',
+    'matplotlib.pyplot',
+    'scipy.interpolate',
+    'scipy.special',
+    'math',
+    'typing',
+    'torch',
+    'toolboxutilities',
+    'CaseInsensitiveDict', 'geoalchemy2', 'geoalchemy2.types', 'geoalchemy2.shape',
+    'shapely', 'shapely.errors', 'shapely.geometry', 'shapely.geometry.base', 'shapely.wkb', 'shapely.wkt',
+    'measurement', 'measurement.measures', 'osgeo'
+]
+sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
