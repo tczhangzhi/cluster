@@ -1,6 +1,8 @@
 torchcluster
 ============
 
+`Documentation <https://torchcluster.readthedocs.io/en/latest/>`__ \|
+
 Torchcluster is a python package for cluster analysis. The speed of the
 clustering algorithm has been effectively improved with the Pytorch
 backend. We are also working on test datasets and visualization tools.
