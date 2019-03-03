@@ -1,21 +1,32 @@
-import pdb
 import torch
 import numpy as np
 from .base import Cluster
 from ..helper.distance import setwise_distance
 
 class KMeans(Cluster):
-    r"""K Means class
-        Args:
-            n_clusters (int) - how many clusters in result.
-            tol (float) - stop to update when shift is smaller than tol
+    """K-Means algorithm
     """
     def __init__(self, n_clusters, tol=1e-4):
+        """Spectrum clustering factory's config.
+
+        Args:
+           n_clusters (int) - How many clusters in result.
+
+        Kwargs:
+           tol (float) - stop to update when shift is smaller than tol
+
+        """
         super(KMeans, self).__init__()
         self.n_clusters = n_clusters
         self.tol = tol
 
     def __call__(self, x):
+        """Clustering.
+
+        Args:
+           x (Tensor) - Data points of number n by feature dim m.
+        
+        """
         idx = np.random.choice(len(x), self.n_clusters)
         state = x[idx]
 
