@@ -43,5 +43,9 @@ class SpectrumClustering(Cluster):
         inv_diag = torch.diag(torch.pow(torch.diag(diag), -0.5))
         sym_laplican = inv_diag.mm(laplican).mm(inv_diag)
 
-        u, s, v = torch.svd(sym_laplican)
-        return self.cluster(u[:, -self.k:])
+        e, v = sym_laplican.eig(eigenvectors=True)
+        _, idx = torch.topk(e[:, 0], self.k, largest=False)
+        select_v = v[:, idx]
+        norm_v = select_v.div(select_v.norm(p=2, dim=1, keepdim=True).expand_as(select_v))
+        
+        return self.cluster(norm_v)
