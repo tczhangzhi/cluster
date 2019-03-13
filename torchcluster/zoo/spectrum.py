@@ -8,7 +8,7 @@ class SpectrumClustering(Cluster):
     """Spectrum clustering algorithm.
     """
 
-    def __init__(self, n_clusters=None, cluster=None, threshold=2, k=2):
+    def __init__(self, n_clusters=None, cluster=None, threshold=2, k=2, eps=1e-05):
         """Spectrum clustering factory's config.
 
         Kwargs:
@@ -20,6 +20,8 @@ class SpectrumClustering(Cluster):
 
            k (int) - the number of selected feature
 
+           eps (float) – a value added to the denominator for numerical stability.
+
         """
 
         super(SpectrumClustering, self).__init__()
@@ -28,6 +30,7 @@ class SpectrumClustering(Cluster):
         self.cluster = cluster
         self.threshold = threshold
         self.k = k
+        self.eps = eps
 
     def __call__(self, x):
         """Clustering.
@@ -46,6 +49,6 @@ class SpectrumClustering(Cluster):
         e, v = sym_laplican.eig(eigenvectors=True)
         _, idx = torch.topk(e[:, 0], self.k, largest=False)
         select_v = v[:, idx]
-        norm_v = select_v.div(select_v.norm(p=2, dim=1, keepdim=True).expand_as(select_v))
+        norm_v = select_v.div(select_v.norm(p=2, dim=1, keepdim=True).expand_as(select_v) + self.eps)
         
         return self.cluster(norm_v)

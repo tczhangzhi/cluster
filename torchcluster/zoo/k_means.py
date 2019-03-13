@@ -45,6 +45,6 @@ class KMeans(Cluster):
                 
             shift = torch.pairwise_distance(pre_state, state)
             total = torch.pow(torch.sum(shift), 2.0)
-            
+
             if total < self.tol:
                 return result, state
