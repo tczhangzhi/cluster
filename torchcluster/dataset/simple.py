@@ -32,4 +32,7 @@ class SimpleDataset(Dataset):
         
         """
         idx_n = n // self.n_clusters
-        return torch.cat([(torch.randn(idx_n, self.feature) + idx * self.sigma).to(self.device) for idx in range(self.n_clusters)])
+        X = torch.cat([torch.randn(idx_n, self.feature, device=self.device) + idx * self.sigma for idx in range(self.n_clusters)])
+        y = torch.cat([torch.ones(idx_n, dtype=torch.long, device=self.device) * idx for idx in range(self.n_clusters)])
+        
+        return X, y
